@@ -40,10 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void fetchDat() {
 
-
-        //calliing Retrofit Api
-     //   Retrofit retrofit= NewsApi.getClient();
-
         apiInterface = retrofit.create(ApiEndPoint.class);
 
         Call<Response> call = apiInterface.getHeadline(getCountry(), apiKey);

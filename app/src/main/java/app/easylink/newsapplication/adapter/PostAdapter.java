@@ -6,47 +6,39 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.squareup.picasso.Picasso;
-
+import java.util.ArrayList;
 import java.util.List;
-
 import app.easylink.newsapplication.R;
+import app.easylink.newsapplication.databinding.ItemsBinding;
 import app.easylink.newsapplication.model.ArticlesItem;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     Context context;
-    List<ArticlesItem> postList;
+    List<ArticlesItem> postList = new ArrayList<>();
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.items, parent, false);
-        return new ViewHolder(view);
+
+        ItemsBinding binding= ItemsBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+
+        return new ViewHolder(binding);
     }
 
     public PostAdapter(Context context, List<ArticlesItem> items){
         this.context = context;
-        this.postList = items;
+        postList.clear();
+        postList.addAll(items);
+        notifyDataSetChanged();
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ArticlesItem a = postList.get(position);
-        holder.tvTitle.setText(postList.get(position).getTitle());
-        holder.tvData.setText(postList.get(position).getSource().getName());
-        holder.tvData.setText(postList.get(position).getPublishedAt());
-
-        String imgUrl = a.getUrlToImage();
-        Picasso.with(context).load(imgUrl).into(holder.img);
-
-        Toast.makeText(context,imgUrl,Toast.LENGTH_LONG).show();
-
+        holder.bind(postList.get(position));
     }
 
     @Override
@@ -55,16 +47,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTitle, tvSource, tvData;
-        ImageView img;
-        CardView cardView;
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            tvTitle = itemView.findViewById(R.id.tvTitle);
-            tvSource = itemView.findViewById(R.id.tvSource);
-            tvData = itemView.findViewById(R.id.tvDate);
-            img =  itemView.findViewById(R.id.image);
-            cardView = itemView.findViewById(R.id.cardView);
+        private final ItemsBinding binding;
+
+         ViewHolder( ItemsBinding binding ) {
+             super(binding.getRoot());
+             this.binding = binding;
+        }
+        public void bind(ArticlesItem a){
+            binding.tvTitle.setText(a.getTitle());
+            binding.tvDate.setText(a.getSource().getName());
+            binding.tvSource.setText(a.getPublishedAt());
+
+            String imgUrl = a.getUrlToImage();
+            Picasso.with(context).load(imgUrl).into(binding.image);
         }
     }
 }

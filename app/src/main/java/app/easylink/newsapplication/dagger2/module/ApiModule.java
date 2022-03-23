@@ -40,17 +40,19 @@ public class ApiModule {
         return client.build();
     }
 
+    //interceptor is used for showing logs.
+
     @Provides
     @Singleton
     Retrofit provideRetrofit(OkHttpClient okHttpClient){
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-     //   OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
         Retrofit retrofit;
         retrofit = new Retrofit.Builder()
                 .baseUrl(mbaseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(okHttpClient)
+                .client(client)
                 .build();
         return retrofit;
     }

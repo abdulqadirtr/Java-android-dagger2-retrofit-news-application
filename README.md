@@ -20,7 +20,7 @@ Dagger2
 Databinding
 
 
-#### Retrofit,OkHttp, Dagger2, 
+#### Retrofit,OkHttp
 
 ```java
 @Module
@@ -66,6 +66,25 @@ public class ApiModule {
 
 ```
 
+
+
+### Dagger2
+
+```java
+public class MyApplication extends Application {
+    private  AppComponent mAppcomponent;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        mAppcomponent = DaggerAppComponent.builder().apiModule(new ApiModule(Constants.url)).appModule(new AppModule(this)).build();
+    }
+
+    public AppComponent getNetComponent() {
+        return mAppcomponent;
+    }
+}
+```
 
 
 #### RecyclerView, Databinding

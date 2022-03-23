@@ -20,7 +20,7 @@ Dagger2
 Databinding
 
 
-***Retrofit,OkHttp, Dagger2, 
+####Retrofit,OkHttp, Dagger2, 
 
 ```java
 @Module
@@ -66,7 +66,9 @@ public class ApiModule {
 
 ```
 
-***RecyclerView, Databinding
+
+
+####RecyclerView, Databinding
 
 ```java
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
@@ -119,7 +121,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
 ```
                          
-3. **Description and Screenshots**
+3. **Screenshots**
 
 ![Main Screen]
 (https://github.com/abdulqadirtr/Java-android-dagger2-retrofit-news-application/blob/master/app/src/main/res/drawable/screen_one.png)
